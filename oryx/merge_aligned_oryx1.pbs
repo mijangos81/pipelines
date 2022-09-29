@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#Merge the chunked bam files for each sample into one bam
+#Manually change the number of NCPUs per task in the NCPUS variable
+
+#PBS -l wd
+#PBS -P mo73 
+#PBS -N merge_aligned_oryx1
+#PBS -l walltime=1:00:00,mem=40GB,ncpus=8,jobfs=4Gb
+#PBS -W umask=022
+#PBS -M jose.mijangosaraujo@sydney.edu.au
+#PBS -m abe
+#PBS -q normal
+
+module load java/jdk-8.40 
+module load R/3.6.1
+module load samtools/1.9
+#module load sambamba/0.8.1
+
+export R_LIBS=/home/549/jm9807/.R
+
+Rscript merge_oryx1.R
+
+#bams=$(find /scratch/mo73/Align_split_2 -name "*.T8_*.bam" | xargs echo)
+
+#lfs setstripe -c 15 /scratch/mo73/Align_merged_2/Align_merged_2/T8.merged.nameSorted.bam
+
+#sambamba merge -t 28 /scratch/mo73/Align_merged_2/Align_merged_2/T8.merged.nameSorted.bam $bams

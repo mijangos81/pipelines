@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#Merge the chunked bam files for each sample into one bam
+#Manually change the number of NCPUs per task in the NCPUS variable
+
+#PBS -l wd
+#PBS -P mo73 
+#PBS -N merge_aligned
+#PBS -l walltime=10:00:00,mem=90GB,ncpus=8,jobfs=4Gb
+#PBS -W umask=022
+#PBS -M jose.mijangosaraujo@sydney.edu.au
+#PBS -m abe
+#PBS -q normal
+
+module load java/jdk-8.40 
+module load R/3.6.1
+module load samtools/1.9
+
+export R_LIBS=/home/549/jm9807/.R
+
+Rscript merge.R
